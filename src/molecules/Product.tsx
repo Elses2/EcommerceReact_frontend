@@ -7,7 +7,7 @@ import type { ReactNode } from 'react';
  * @prop onAddToCart - Callback invoked when the "Agregar al carrito" button is clicked.
  * @spec (spec §3, molecules/product.ejs)
  */
-interface ProductView {
+export interface ProductView {
   id: number;
   name: string;
   price: number;
@@ -16,7 +16,7 @@ interface ProductView {
   categories?: string[];
 }
 
-interface ProductProps {
+export interface ProductProps {
   product: ProductView;
   fallbackImageUrl?: string;
   onAddToCart?: (productId: number) => void;
