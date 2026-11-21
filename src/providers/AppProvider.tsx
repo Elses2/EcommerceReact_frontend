@@ -1,5 +1,6 @@
 import type { ReactNode } from "react";
 import { AuthProvider } from "./AuthProvider";
+import { CartProvider } from "./CartProvider";
 
 interface AppProviderProps {
   children: ReactNode;
@@ -7,9 +8,14 @@ interface AppProviderProps {
 
 /**
  * App-level provider that wraps the application with shared context.
- * Currently includes AuthProvider for session management.
+ * Includes AuthProvider for session management and CartProvider for
+ * shopping-cart state (spec §24.2).
  * @param props - AppProviderProps
  */
 export function AppProvider({ children }: AppProviderProps) {
-  return <AuthProvider>{children}</AuthProvider>;
+  return (
+    <AuthProvider>
+      <CartProvider>{children}</CartProvider>
+    </AuthProvider>
+  );
 }

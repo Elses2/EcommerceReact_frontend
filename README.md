@@ -49,7 +49,7 @@ src/
   organisms/  # Componentes organismos (Header, Footer, …)
   components/ # Componentes compartidos (RequireAuth, …)
   pages/      # Páginas de la aplicación (Login, Register, …)
-  providers/  # Providers de contexto (AppProvider, AuthProvider, …)
+  providers/  # Providers de contexto (AppProvider, AuthProvider, CartProvider, …)
   lib/        # Utilidades y helpers (api client, validation)
 ```
 
@@ -76,14 +76,23 @@ src/
 | `ProductRow` | `molecules/product-row.ejs` | Fila horizontal compacta de producto |
 | `Product` | `molecules/product.ejs` | Card de producto (imagen + nombre + precio + botón) |
 
-## Autenticación
+## Autenticación y carrito
+
+### Autenticación
 
 El flujo de autenticación se implementa con:
 
 - **API client** (`src/lib/api.ts`): wrapper sobre `fetch` con `credentials: "same-origin"` y rutas relativas `/api/…`. Maneja errores 401 (redirige a `/login?next=`), 400 con errores por campo y errores de red.
-- **AuthProvider** (`src/providers/AuthProvider.tsx``): contexto que resuelve la sesión vía `GET /api/auth/me` en el montaje, expone `login`, `register` y `logout`.
-- **RequireAuth** (`src/components/RequireAuth.tsx`): guard de ruta que redirige a invitados a `/login?next=<ruta>` y no renderiza hijos hasta que la autenticación se resuelva.
+- **AuthProvider** (`src/providers/AuthProvider.tsx`): contexto que resuelve la sesión vía `GET /api/auth/me` en el montaje, expone `login`, `register` y `logout`.
+- **RequireAuth** (`src/components/RequireAuth.tsx`): guard de ruta que redirige a invitados a `/login?next=<ruta>` y no renderiza hijos hasta que la autenticación se resuelve.
 - **Páginas Login y Register**: formularios con validación cliente (spec §6.3) y errores del backend mostrados por campo.
+
+### Carrito (CartProvider)
+
+- **CartProvider** (`src/providers/CartProvider.tsx`): contexto que gestiona el estado del carrito sincronizado con el backend Redis (spec §24). Expone `cart` (`{items, total, count}`), `status` y las acciones `add`, `increase`, `decrease`, `remove`, `clear`.
+- **Flujo de intención pendiente** (spec §24.3): cuando un usuario invitado hace clic en "Agregar al carrito" y recibe 401, la intención se guarda en `sessionStorage` bajo la clave `pending_cart_add`. Al iniciar sesión (transición guest → authenticated), la intención se consume automáticamente.
+- **/cart page** (`src/pages/Cart.tsx`): página protegida por `RequireAuth` que muestra los ítems del carrito, controles de cantidad, totales y enlace a `/checkout`.
+- **Header**: el contador `data-cart-count` del header se sincroniza en tiempo real desde `CartProvider`.
 
 ## Flujo de contribución
 
