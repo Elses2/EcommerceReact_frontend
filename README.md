@@ -47,10 +47,20 @@ src/
   atoms/      # Componentes atómicos (Button, Badge, …)
   molecules/  # Componentes moleculares (SearchBar, …)
   organisms/  # Componentes organismos (Header, Footer, …)
-  pages/      # Páginas de la aplicación
+  components/ # Componentes compartidos (RequireAuth, …)
+  pages/      # Páginas de la aplicación (Login, Register, …)
   providers/  # Providers de contexto (AppProvider, AuthProvider, …)
-  lib/        # Utilidades y helpers
+  lib/        # Utilidades y helpers (api client, validation)
 ```
+
+## Autenticación
+
+El flujo de autenticación se implementa con:
+
+- **API client** (`src/lib/api.ts`): wrapper sobre `fetch` con `credentials: "same-origin"` y rutas relativas `/api/…`. Maneja errores 401 (redirige a `/login?next=`), 400 con errores por campo y errores de red.
+- **AuthProvider** (`src/providers/AuthProvider.tsx``): contexto que resuelve la sesión vía `GET /api/auth/me` en el montaje, expone `login`, `register` y `logout`.
+- **RequireAuth** (`src/components/RequireAuth.tsx`): guard de ruta que redirige a invitados a `/login?next=<ruta>` y no renderiza hijos hasta que la autenticación se resuelva.
+- **Páginas Login y Register**: formularios con validación cliente (spec §6.3) y errores del backend mostrados por campo.
 
 ## Flujo de contribución
 
