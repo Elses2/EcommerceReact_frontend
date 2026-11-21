@@ -44,14 +44,37 @@ VITE_API_PROXY_URL=http://localhost:3000 npm run dev
 
 ```
 src/
-  atoms/      # Componentes atómicos (Button, Badge, …)
-  molecules/  # Componentes moleculares (SearchBar, …)
+  atoms/      # Componentes atómicos (Button, ProfilePic, BadgeCounter, Input, MenuItem)
+  molecules/  # Componentes moleculares (SearchBar, ProfileBtn, CartIcon, HeaderRight, Numeric, Breadcrumb, ProductRow, Product)
   organisms/  # Componentes organismos (Header, Footer, …)
   components/ # Componentes compartidos (RequireAuth, …)
   pages/      # Páginas de la aplicación (Login, Register, …)
   providers/  # Providers de contexto (AppProvider, AuthProvider, …)
   lib/        # Utilidades y helpers (api client, validation)
 ```
+
+### Atoms (SPEC §3)
+
+| Componente | EJS parcial | Descripción |
+|---|---|---|
+| `Button` | *(scaffold, no en SPEC §3)* | Botón genérico (placeholder del scaffold) |
+| `ProfilePic` | `atoms/profile-pic.ejs` | Círculo de foto de usuario con fallback de inicial |
+| `BadgeCounter` | `atoms/badge-counter.ejs` | Círculo rojo numérico para el carrito |
+| `Input` | `atoms/input.ejs` | Input de texto con variantes claro/oscuro y slot de error |
+| `MenuItem` | `atoms/menu-item.ejs` | Ítem de menú como `<a>` o `<button>` |
+
+### Molecules (SPEC §3)
+
+| Componente | EJS parcial | Descripción |
+|---|---|---|
+| `SearchBar` | `molecules/search.ejs` | Formulario de búsqueda con icono de lupa |
+| `ProfileBtn` | `molecules/profile-btn.ejs` | Píldora de perfil con avatar y nombre |
+| `CartIcon` | `molecules/cart-icon.ejs` | Ícono de carrito con BadgeCounter |
+| `HeaderRight` | `molecules/header-right.ejs` | Cluster derecho del header (carrito + perfil + logout) |
+| `Numeric` | `molecules/numeric.ejs` | Control de cantidad − N + |
+| `Breadcrumb` | `molecules/breadcrumb.ejs` | Navegación de migas de pan |
+| `ProductRow` | `molecules/product-row.ejs` | Fila horizontal compacta de producto |
+| `Product` | `molecules/product.ejs` | Card de producto (imagen + nombre + precio + botón) |
 
 ## Autenticación
 
