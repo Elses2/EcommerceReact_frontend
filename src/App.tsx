@@ -6,6 +6,8 @@ import Register from "./pages/Register";
 import Cart from "./pages/Cart";
 import Products from "./pages/Products";
 import ProductDetail from "./pages/ProductDetail";
+import Category from "./pages/Category";
+import Search from "./pages/Search";
 import NotFound from "./pages/NotFound";
 import { RequireAuth } from "./components/RequireAuth";
 
@@ -39,6 +41,11 @@ function App() {
             </RequireAuth>
           }
         />
+        <Route
+          path="/categories/:categoryId"
+          element={<Category />}
+        />
+        <Route path="/search" element={<Search />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>

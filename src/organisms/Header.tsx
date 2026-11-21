@@ -27,8 +27,8 @@ export function Header({ cartCount = 0 }: HeaderProps) {
 
   const handleSearch = useCallback(
     (query: string) => {
-      const params = new URLSearchParams(query ? { query } : {});
-      navigate(`/products?${params.toString()}`);
+      const params = new URLSearchParams(query ? { q: query } : {});
+      navigate(`/search?${params.toString()}`);
     },
     [navigate],
   );
