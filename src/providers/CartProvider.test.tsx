@@ -328,7 +328,15 @@ function ActionTester() {
   return (
     <div>
       <span data-testid="total">{cart.total}</span>
-      <button data-testid="add-btn" onClick={() => add(42)}>
+      <button
+        data-testid="add-btn"
+        // El rechazo asíncrono debe capturarse acá: en la UI real el llamador
+        // maneja el error (o el provider); sin catch, Vitest lo reporta como
+        // unhandled rejection después del test (falla en CI por timing).
+        onClick={() => {
+          add(42).catch(() => {});
+        }}
+      >
         Add
       </button>
     </div>
