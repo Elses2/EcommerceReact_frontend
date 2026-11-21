@@ -1,6 +1,7 @@
 import { useAuth } from '../providers/AuthProvider';
 import { Header } from '../organisms/Header';
 import { Footer } from '../organisms/Footer';
+import { useCart } from '../providers/CartProvider';
 import type { ReactNode } from 'react';
 
 interface LayoutProps {
@@ -13,11 +14,13 @@ interface LayoutProps {
  * "authenticated" or "guest" — NEVER while "loading" (attribute omitted),
  * per the S13 data-* contract (spec §5). Mirrors the monolith EJS layout
  * `templates/layout.ejs` where data-logged-in lives on <body>.
+ * Passes the real cart count from CartProvider to Header (spec §24.3).
  * @param props - LayoutProps with children to render inside <main>
- * @spec (spec §5, §6.14, templates/layout.ejs)
+ * @spec (spec §5, §6.14, templates/layout.ejs, §24.3)
  */
 export function Layout({ children }: LayoutProps): ReactNode {
   const { status } = useAuth();
+  const { cart } = useCart();
 
   const dataLoggedIn =
     status === 'authenticated'
@@ -28,7 +31,7 @@ export function Layout({ children }: LayoutProps): ReactNode {
 
   return (
     <div data-logged-in={dataLoggedIn}>
-      <Header />
+      <Header cartCount={cart.count} />
       <main className="flex-grow">{children}</main>
       <Footer />
     </div>

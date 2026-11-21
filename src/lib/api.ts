@@ -235,4 +235,15 @@ export const api = {
   delete<T>(path: string): Promise<T> {
     return request<T>("DELETE", path);
   },
+
+  /**
+   * Perform a PATCH request with an optional JSON body.
+   * @param path - Relative path under `/api` (e.g. `/cart/increase/1`)
+   * @param body - Optional request payload
+   * @returns Parsed JSON response body
+   * @spec (spec §23.2)
+   */
+  patch<T>(path: string, body?: unknown): Promise<T> {
+    return request<T>("PATCH", path, body);
+  },
 };
