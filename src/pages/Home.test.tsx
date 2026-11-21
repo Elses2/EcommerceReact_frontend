@@ -53,7 +53,7 @@ const mockSuggested = [
     price: 15000,
     imageUrl: '/images/keyboard.jpg',
     inStock: true,
-    categories: ['Periféricos'],
+    categories: [{ id: 1, name: 'Periféricos' }],
   },
 ];
 
@@ -64,7 +64,7 @@ const mockMostOrdered = [
     price: 8999,
     imageUrl: '/images/mouse.jpg',
     inStock: true,
-    categories: ['Periféricos'],
+    categories: [{ id: 1, name: 'Periféricos' }],
   },
 ];
 

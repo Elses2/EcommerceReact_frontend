@@ -10,7 +10,7 @@ describe('Product molecule (spec §3, molecules/product.ejs)', () => {
     price: 15000,
     imageUrl: '/images/keyboard.jpg',
     inStock: true,
-    categories: ['Periféricos'],
+    categories: [{ id: 1, name: 'Periféricos' }],
   };
 
   it('renders the product card with image, name, and price', () => {

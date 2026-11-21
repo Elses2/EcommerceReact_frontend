@@ -1,6 +1,15 @@
 import type { ReactNode } from 'react';
 
 /**
+ * Category shape used in ProductView.
+ * Mirrors the backend's category DTO (spec §25.2, §26.2).
+ */
+export interface CategoryRef {
+  id: number;
+  name: string;
+}
+
+/**
  * Props for the Product molecule.
  * @prop product - Product view object with id, name, price, imageUrl, inStock, categories.
  * @prop fallbackImageUrl - URL used when the product image fails to load.
@@ -13,7 +22,8 @@ export interface ProductView {
   price: number;
   imageUrl: string;
   inStock: boolean;
-  categories?: string[];
+  description?: string;
+  categories?: CategoryRef[];
 }
 
 export interface ProductProps {
