@@ -9,6 +9,9 @@ import ProductDetail from "./pages/ProductDetail";
 import Category from "./pages/Category";
 import Search from "./pages/Search";
 import NotFound from "./pages/NotFound";
+import { Error500 } from "./pages/Error500";
+import { CheckoutPage } from "./pages/Checkout";
+import { CheckoutConfirmation } from "./pages/CheckoutConfirmation";
 import { RequireAuth } from "./components/RequireAuth";
 
 /**
@@ -32,6 +35,18 @@ function App() {
             </RequireAuth>
           }
         />
+        <Route
+          path="/checkout"
+          element={
+            <RequireAuth>
+              <CheckoutPage />
+            </RequireAuth>
+          }
+        />
+        <Route
+          path="/checkout/confirmation/:token"
+          element={<CheckoutConfirmation />}
+        />
         <Route path="/products" element={<Products />} />
         <Route
           path="/products/:id"
@@ -46,6 +61,7 @@ function App() {
           element={<Category />}
         />
         <Route path="/search" element={<Search />} />
+        <Route path="/500" element={<Error500 />} />
         <Route path="*" element={<NotFound />} />
       </Routes>
     </Layout>
