@@ -320,7 +320,7 @@ describe("Checkout page (spec §19, §19.5)", () => {
  * Renderiza la ruta actual del router como texto — utilidad para afirmar
  * navegaciones bajo MemoryRouter en los tests.
  */
-function RouterPathProbe(): React.ReactElement {
+function RouterPathProbe() {
   const location = useLocation();
   return <span data-testid="router-path">{location.pathname}</span>;
 }
