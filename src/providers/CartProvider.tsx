@@ -184,17 +184,22 @@ export function CartProvider({ children }: CartProviderProps) {
       setCartStatus("ready");
     }
 
-    prevAuthStatus.current = authStatus;
+    // NOTA: prevAuthStatus NO se toca acá — el efecto consumidor (que corre
+    // después en el mismo ciclo) necesita leer el valor PREVIO a esta
+    // transición para detectarla (montaje fresco ya autenticado incluido).
     return () => {
       cancelled = true;
     };
   }, [authStatus]);
 
-  // Pending-intention consumer: when auth transitions guest → authenticated,
-  // consume any pending add and clear storage.
+  // Pending-intention consumer: cuando la sesión pasa a autenticada venga de
+  // donde venga (login SPA o recarga completa ya con cookie — el monolito
+  // consume al cargar, spec §24.3), consume cualquier intención pendiente.
   useEffect(() => {
-    if (authStatus !== "authenticated") return;
-    if (prevAuthStatus.current === "authenticated") return; // only on transition
+    const wasAuthenticated = prevAuthStatus.current === "authenticated";
+    const isNowAuthenticated = authStatus === "authenticated";
+
+    if (isNowAuthenticated && !wasAuthenticated) {
 
     const pending = loadPending();
     if (!pending) return;
@@ -209,11 +214,11 @@ export function CartProvider({ children }: CartProviderProps) {
       .catch(() => {
         /* still not authenticated or network — leave intention in storage */
       });
-  }, [authStatus]);
+  }
 
-  // Keep the ref in sync.
-  useEffect(() => {
-    prevAuthStatus.current = authStatus;
+  // El ref se sincroniza al FINAL de este efecto (después de leerlo), de
+  // modo que la próxima transición se detecte correctamente.
+  prevAuthStatus.current = authStatus;
   }, [authStatus]);
 
   /**

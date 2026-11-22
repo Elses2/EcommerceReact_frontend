@@ -66,6 +66,7 @@ export default [
       '.env',
       '.env.local',
       '.env.*.local',
+      'e2e/**',
     ],
   },
 ];

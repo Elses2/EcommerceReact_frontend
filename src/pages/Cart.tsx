@@ -39,7 +39,7 @@ export function Cart() {
       <ul
         id="cart-items"
         aria-label="Productos en el carrito"
-        className="mt-6 flex flex-col gap-4 hidden"
+        className={`mt-6 flex flex-col gap-4 ${isEmpty ? 'hidden' : ''}`}
         data-testid="cart-items"
       >
         {cart.items.map((item) => (
